@@ -122,11 +122,14 @@ const ContactComponent = (props) => {
 };
 
 const ContactListComponent = (props) => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
 
   const filteredContacts = contactList.filter((userData) =>
     userData.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
   return (
     <Container>
       <ProfileInfoDiv>
@@ -141,7 +144,7 @@ const ContactListComponent = (props) => {
             <MoreVert />
           </IconButton>
         </HeaderSide>
-        <ProfileImage src="./pp1.png" />
+        <ProfileImage src="https://w0.peakpx.com/wallpaper/874/7/HD-wallpaper-ultra-instinct-goku-anime-blue-dragon-ball-galaxy-goku-hero-son-goku-ultra-instinct-goku-white-thumbnail.jpg" />
       </ProfileInfoDiv>
       <SearchBox>
         <SearchContainer>
@@ -152,16 +155,13 @@ const ContactListComponent = (props) => {
           />
           <SearchInput
             placeholder="Search or start new chat"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            value={searchTerm}
+            onChange={handleSearchChange}
           />
         </SearchContainer>
       </SearchBox>
-      {contactList.map((userData) => (
-        <ContactComponent userData={userData} setChat={props.setChat} />
-      ))}
-      {filteredContacts.map((userData) => (
-        <ContactComponent userData={userData} />
+      {filteredContactList.map((userData) => (
+        <ContactComponent userData={userData} setChat={props.setChat} key={userData.id} />
       ))}
     </Container>
   );
